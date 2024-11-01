@@ -1,0 +1,329 @@
+[force_move]
+enable_force_move: True
+#   Set to true to enable FORCE_MOVE and SET_KINEMATIC_POSITION
+#   extended G-Code commands. The default is false.
+
+#Variable Store
+[gcode_macro _FILAMENT_VARS]
+variable_activelane: None
+variable_lane_count: 2 # Number of lanes to look for
+variable_count: 0
+variable_jam_retry: 0
+variable_infinitespool: 1
+variable_bowden_length: 1140 # Run the MEASURE_BOWDEN macro to get an estimate for this value
+variable_slow_feed_length: 200 # The amount of travel needed to clear any encoders/Y-splitter/etc. Moves slowly through these for better reliability
+variable_slow_remove_length: 100 # The amount of travel needed to clear extruder on filament removal.
+variable_bowden_calculate: 0
+gcode: # Gcode section left intentionally blank. Do not disturb.
+
+    {action_respond_info(" Running the VARIABLE_STORE macro does nothing")}
+
+[mcu pcu]
+canbus_uuid: 2c180b4d19b3
+
+# Aliases for easier configuration.
+
+[board_pins pcu_alias]
+mcu: pcu
+aliases:
+aliases_both_sides:
+  belay=PA3,
+aliases_lane0:
+  sensor_0=PA4,
+  lane0_step=PB15,
+  lane0_dir=PB14,
+  lane0_enable=PA8,
+  lane0_uart=PA10,
+aliases_lane1:
+  sensor_1=PB9,
+  lane1_step=PD2,
+  lane1_dir=PB13,
+  lane1_enable=PD1,
+  lane1_uart=PC7,
+
+
+#
+# Below are the stepper configs, you will need one for each lane
+#
+
+[extruder_stepper stepper_0]
+extruder: 
+step_pin: pcu:lane0_step
+dir_pin: pcu:lane0_dir
+enable_pin: !pcu:lane0_enable
+microsteps: 16
+rotation_distance: 22.7409
+gear_ratio: 50:10 # CW2 gear ratio
+microsteps: 16
+full_steps_per_rotation: 200
+
+[tmc2209 extruder_stepper stepper_0]
+uart_pin: pcu:lane0_uart
+run_current: 0.6
+hold_current: .1
+stealthchop_threshold: 0
+interpolate: True
+
+[extruder_stepper stepper_1]
+extruder: 
+step_pin: pcu:lane1_step
+dir_pin: pcu:lane1_dir
+enable_pin: !pcu:lane1_enable
+microsteps: 16
+rotation_distance: 22.7409
+gear_ratio: 50:10 # CW2 gear ratio
+microsteps: 16
+full_steps_per_rotation: 200
+
+[tmc2209 extruder_stepper stepper_1]
+uart_pin: pcu:lane1_uart
+run_current: 0.6
+hold_current: .1
+stealthchop_threshold: 0
+interpolate: True
+
+#
+# Sensors below, you will need 1 Belay sensor and then 1 sensor for each lane
+#
+
+[belay belay0]
+extruder_type: extruder_stepper
+extruder_stepper_name: stepper_1
+sensor_pin: ^!pcu:belay
+multiplier_high: 1.3
+multiplier_low: .7
+debug_level: 1
+
+#[filament_switch_sensor belay0]
+#switch_pin: ^!pcu:belay
+#pause_on_runout: False
+
+[filament_switch_sensor sensor_0]
+switch_pin: ^pcu:sensor_0
+pause_on_runout: False
+
+[filament_switch_sensor sensor_1]
+switch_pin: ^pcu:sensor_1
+pause_on_runout: False
+
+#
+# Macros:
+#
+
+[gcode_macro test_extrude_short]
+gcode:
+  {% set lane = printer["gcode_macro _FILAMENT_VARS"].activelane %}
+  FORCE_MOVE STEPPER="extruder_stepper stepper_{lane}" DISTANCE=10 VELOCITY=50 ACCEL=600
+
+[gcode_macro test_extrude_long]
+gcode:
+  {% set lane = printer["gcode_macro _FILAMENT_VARS"].activelane %}
+  FORCE_MOVE STEPPER="extruder_stepper stepper_{lane}" DISTANCE=200 VELOCITY=50 ACCEL=600
+
+[gcode_macro check_belay]
+gcode:
+  {% if printer["belay belay0"].enabled == True %}
+    RESPOND MSG="True"
+  {% elif printer["belay belay0"].enabled == False %}
+    RESPOND MSG="False"
+  {% else %}
+    RESPOND MSG="Something went wrong"
+  {% endif %}
+
+[gcode_macro SYNC_EXTRUDER]
+gcode:
+  {% set lane = printer["gcode_macro _FILAMENT_VARS"].activelane %}
+  SYNC_EXTRUDER_MOTION EXTRUDER=stepper_{lane} MOTION_QUEUE=extruder
+  BELAY_TOGGLE_AUTO_UPDATE BELAY=belay0 ENABLE=true   # Enable auto update
+  ACTIVATE_EXTRUDER EXTRUDER=extruder
+
+[gcode_macro ISOLATE_EXTRUDER]
+gcode:
+  {% set lane = printer["gcode_macro _FILAMENT_VARS"].activelane %}
+  SYNC_EXTRUDER_MOTION EXTRUDER=stepper_{lane} MOTION_QUEUE=
+  BELAY_TOGGLE_AUTO_UPDATE BELAY=belay0 ENABLE=false  # Disable auto update
+
+[gcode_macro CHECK_STATUS]
+gcode:
+  {% set lane = 0 %}
+  {% for lane in range(printer["gcode_macro _FILAMENT_VARS"].lane_count) %}
+    {% if printer['filament_switch_sensor sensor_' + lane|string].filament_detected and printer["belay belay0"].last_state == False %}
+      FORCE_MOVE STEPPER="extruder_stepper stepper_{lane}" DISTANCE=10 VELOCITY=50 ACCEL=600
+      M400 # Wait for buffer to clear
+      _CHECKING_BELAY LANE={lane}
+    {% elif not printer['filament_switch_sensor sensor_' + lane|string].filament_detected and printer["belay belay0"].last_state == False %}
+      FORCE_MOVE STEPPER="extruder_stepper stepper_{lane}" DISTANCE=20 VELOCITY=50 ACCEL=600
+      M400 # Wait for buffer to clear
+      _CHECKING_LANE LANE={lane}
+    {% elif printer['filament_switch_sensor sensor_' + lane|string].filament_detected and printer["belay belay0"].last_state == True %}
+      RESPOND MSG="Lane {lane}: Filament is at toolhead"
+    {% else %}
+      RESPOND MSG="Lane {lane}: No Filament is loaded"
+    {% endif %}
+  {% endfor %}
+
+[gcode_macro _CHECKING_BELAY]
+gcode:
+  {% set lane = params.LANE %}
+  {% if printer["belay belay0"].last_state == True %}
+    RESPOND MSG="Lane {lane} - Filament is at toolhead"
+  {% else %}
+    REMOVE_FILAMENT LANE={lane} SKIPCHECK=True
+    RESPOND MSG="Lane {lane} - Filament is ready"
+  {% endif %}
+
+[gcode_macro _CHECKING_LANE]
+gcode:
+  {% set lane = params.LANE %}
+  {% if not printer['filament_switch_sensor sensor_' + lane|string].filament_detected %}
+    RESPOND MSG="Lane {lane}: No Filament is loaded"
+  {% else %}
+    REMOVE_FILAMENT LANE={lane}  SKIPCHECK=True
+    RESPOND MSG="Lane {lane}: Filament is ready"
+  {% endif %}
+
+[gcode_macro SET_LANE]
+gcode:
+  {% set specified = params.SPECIFIED|default(None) %}
+  {% if not specified == None %}
+    RESPOND MSG="Activating Lane {specified}"
+    SET_GCODE_VARIABLE MACRO=_FILAMENT_VARS VARIABLE=activelane VALUE={specified}
+  {% elif printer['filament_switch_sensor sensor_0'].filament_detected and printer['filament_switch_sensor sensor_1'].filament_detected %}
+    RESPOND TYPE=error msg="!! UNABLE TO DETECT SPOOL, BOTH SENSORS TRIGGERED !!"
+  {% elif printer['filament_switch_sensor sensor_0'].filament_detected and not printer['filament_switch_sensor sensor_1'].filament_detected %}
+    RESPOND MSG="Activating Lane 0"
+    SET_GCODE_VARIABLE MACRO=_FILAMENT_VARS VARIABLE=activelane VALUE=0
+  {% elif printer['filament_switch_sensor sensor_1'].filament_detected and not printer['filament_switch_sensor sensor_0'].filament_detected %}
+    RESPOND MSG="Activating Lane 1"
+    SET_GCODE_VARIABLE MACRO=_FILAMENT_VARS VARIABLE=activelane VALUE=1
+  {% else %}
+    RESPOND TYPE=error msg="!! UNKNOWN SPOOL CONFIGURATION !!"
+  {% endif %}
+
+[delayed_gcode INITIAL_SET_LANE]
+initial_duration: 5
+gcode:
+   SET_LANE
+	
+[gcode_macro REMOVE_FILAMENT] #Removes filament from system, automatic, based on current active spool
+gcode:
+  {% set lane = params.LANE|default(printer["gcode_macro _FILAMENT_VARS"].activelane) %}
+  {% set skipcheck = params.SKIPCHECK|default(False) %}
+  {% set CURRENT_ACCEL = printer.toolhead.max_accel %} 
+  SET_VELOCITY_LIMIT ACCEL=50
+  M83
+  {% if not printer['filament_switch_sensor sensor_' + lane|string].filament_detected %}
+    RESPOND TYPE=error msg="No Filament Detected"
+  {% endif %}
+  {% if printer["belay belay0"].last_state == True and printer['filament_switch_sensor sensor_' + lane|string].filament_detected and skipcheck == False %}
+    RESPOND MSG="Retracting filament in Lane {lane} from toolhead..."
+    _UNLOAD_TOOLHEAD LANE={lane}
+  {% elif printer["belay belay0"].last_state == False and printer['filament_switch_sensor sensor_' + lane|string].filament_detected and skipcheck == False %}
+    RESPOND MSG="Unsure of filament location, carefully retracting filament in Lane {lane}..."
+    FORCE_MOVE STEPPER="extruder_stepper stepper_{lane}" DISTANCE=10 VELOCITY=50 ACCEL=600
+    _UNLOAD_FILAMENT LANE={lane}
+  {% endif %}
+  {% if printer['filament_switch_sensor sensor_' + lane|string].filament_detected %}
+    RESPOND MSG="Carefully retracting filament in Lane {lane}..."
+    {% set step = 0 %}
+    {% for step in range(350) %}
+      M400
+      _REMOVING_FILAMENT LANE={lane}
+    {% endfor %}
+  {% else %}
+    RESPOND TYPE=error msg="!! No Filament Detected !!"
+  {% endif %}
+
+[gcode_macro _REMOVING_FILAMENT] 
+gcode:
+  {% set lane = params.LANE %}
+  {% if printer['filament_switch_sensor sensor_' + lane|string].filament_detected %}
+    FORCE_MOVE STEPPER="extruder_stepper stepper_{lane}" DISTANCE=-10 VELOCITY=50 ACCEL=600 
+  {% endif %}
+
+[gcode_macro _UNLOAD_TOOLHEAD]
+gcode:
+  {% set lane = params.LANE %}
+  {% set SLOW_MOVE = printer["gcode_macro _FILAMENT_VARS"].slow_remove_length %}
+  {% set FAST_MOVE = printer["gcode_macro _FILAMENT_VARS"].bowden_length - printer["gcode_macro _FILAMENT_VARS"].slow_remove_length %}
+  {% if printer["belay belay0"].last_state == True and printer['filament_switch_sensor sensor_' + lane|string].filament_detected %}
+    SYNC_EXTRUDER
+    M109 S200
+    G1 E-{SLOW_MOVE} F2000 # Slow move to clear the extruder
+    TURN_OFF_HEATERS
+    FORCE_MOVE STEPPER="extruder_stepper stepper_{lane}" DISTANCE=-{FAST_MOVE} VELOCITY=50 ACCEL=600
+  {% endif %}
+
+[gcode_macro LOAD_FILAMENT]
+gcode:
+  {% set temp = params.TEMP %}
+  M104 S{temp}
+  {% set lane = printer["gcode_macro _FILAMENT_VARS"].activelane %}
+  {% set FAST_MOVE = printer["gcode_macro _FILAMENT_VARS"].bowden_length %}	
+  {% set SLOW_MOVE = printer["gcode_macro _FILAMENT_VARS"].slow_feed_length %}
+  {% if not printer['filament_switch_sensor sensor_' + lane|string].filament_detected %}
+    RESPOND MSG="Fast loading the bowden..."
+    FORCE_MOVE STEPPER="extruder_stepper stepper_{lane}" DISTANCE={FAST_MOVE} VELOCITY=50 ACCEL=600
+  {% endif %}
+  RESPOND MSG="Pushing filament to the extruder..."
+  {% set CURRENT_ACCEL = printer.toolhead.max_accel %} 
+  SET_VELOCITY_LIMIT ACCEL=2000
+  M83
+  {% set step = 0 %}
+  {% for step in range(350) %}
+      M400 # Wait for buffer to clear
+      _LOADING_FILAMENT LANE={lane}
+  {% endfor %}
+  SET_VELOCITY_LIMIT ACCEL={CURRENT_ACCEL}
+  RESPOND MSG="Pushing filament to the nozzle..."
+  SYNC_EXTRUDER
+  M109 S{temp}
+  G1 E25 F300
+  TURN_OFF_HEATERS
+
+[gcode_macro _LOADING_FILAMENT]
+gcode:
+  {% set lane = params.LANE %}
+  {% if printer["belay belay0"].last_state == False %}
+    FORCE_MOVE STEPPER="extruder_stepper stepper_{lane}" DISTANCE=10 VELOCITY=50 ACCEL=600
+  {% endif %}
+
+[gcode_macro MEASURE_BOWDEN]
+gcode:
+  {% set lane = printer["gcode_macro _FILAMENT_VARS"].activelane %}
+  {% if  printer["gcode_macro _FILAMENT_VARS"].activelane == None %}
+    RESPOND MSG="No spool active. Activate a spool first"
+  {% else %}
+    RESPOND MSG="Removing Filament to starting location"
+	REMOVE_FILAMENT
+	RESPOND MSG="Starting Measurement"    
+    {% set CURRENT_ACCEL = printer.toolhead.max_accel %} 
+    SET_VELOCITY_LIMIT ACCEL=2000
+	SET_GCODE_VARIABLE MACRO=_FILAMENT_VARS VARIABLE=bowden_calculate VALUE=0
+    M83
+    {% set step = 0 %}
+    {% for step in range(350) %}
+      M400 # Wait for buffer to clear
+      _MEASURING_BOWDEN
+    {% endfor %}
+    SET_VELOCITY_LIMIT ACCEL={CURRENT_ACCEL}
+    _MEASURING_BOWDEN_CHECK
+  {% endif %}
+
+[gcode_macro _MEASURING_BOWDEN]
+gcode:
+  {% set lane = printer["gcode_macro _FILAMENT_VARS"].activelane %}
+  {% if printer["belay belay0"].last_state == False %}
+    FORCE_MOVE STEPPER="extruder_stepper stepper_{lane}" DISTANCE=10 VELOCITY=50 ACCEL=600
+	{% set MEASUREMENT = printer["gcode_macro _FILAMENT_VARS"].bowden_calculate + 10 %}
+	SET_GCODE_VARIABLE MACRO=_FILAMENT_VARS VARIABLE=bowden_calculate VALUE={MEASUREMENT}
+  {% endif %}
+  
+[gcode_macro _MEASURING_BOWDEN_CHECK]
+gcode:
+  {% if printer["belay belay0"].last_state == False %}
+    RESPOND TYPE=error msg="!! FAULT WITH EXTRUDER FILAMENT LOADING !!"
+  {% else %}
+    RESPOND MSG="Bowden length is "{printer["gcode_macro _FILAMENT_VARS"].bowden_calculate}
+  {% endif %}
+	
