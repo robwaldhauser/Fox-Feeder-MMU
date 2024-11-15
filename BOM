@@ -1,0 +1,30 @@
+BOM is a work in progress, but the general and current counts are as follows:
+
+2 Lane - Fox Feeder MMU
+    • 2x Nema14
+    • 2x BMG Gear Set
+    • 6x 5x9x9 Needle Roller Bearings
+    • 32x M3 shims
+    • 8x 5x10x5 Shaft Collars
+    • 4x 5x80mm Dowels
+    • 4x Limit Switches
+    • 5x 1515 Extrusion 200mm
+    • 8x ECAS Fittings
+    • 1x MCU of choice (must support 2 stepper drivers, and 4 limit switches)
+    • PTFE Tubing
+    • *assorted M3 hardware that has not been tallied yet
+
+4 Lane – Fox Feeder MMU
+    • 4x Nema14
+    • 4x BMG Gear Set
+    • 12x 5x9x9 Needle Roller Bearings
+    • 64x M3 shims
+    • 16x 5x10x5 Shaft Collars
+    • 8x 5x80mm Dowels
+    • 6x Limit Switches
+    • 2x 1515 Extrusion 200mm
+    • 3x 1515 Extrusion 370mm
+    • 12x ECAS Fittings
+    • 1x MCU of choice (must support 4 stepper drivers, and 6 limit switches)
+    • PTFE Tubing
+    • *assorted M3 hardware that has not been tallied yet
