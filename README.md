@@ -6,7 +6,7 @@ If you like this project, consider [tipping](https://www.Ko-fi.com/robxberty)!
 
 ![FoxFeederMMU](https://github.com/user-attachments/assets/43a852b4-0c64-4c40-bf6a-195059f83858)
 
-##Features ✨
+## Features ✨
 
 - Affordable: Designed with cost-effective components, making multi-material printing accessible.
 - Customizable Lanes: Choose between 2-lane or 4-lane configurations to suit your needs (additional lanes may be supported in the future)
@@ -14,7 +14,7 @@ If you like this project, consider [tipping](https://www.Ko-fi.com/robxberty)!
 - Seamless Integration: Built to work flawlessly with the FriendlyFox macro package. One .cfg to add and that's it, no plugins needed!
 - Ease of Assembly: A straightforward assembly process suitable for hobbyists and newcomers alike.
 
-##Table of Contents 📖
+## Table of Contents 📖
 
 - Introduction
 - Features
@@ -26,7 +26,7 @@ If you like this project, consider [tipping](https://www.Ko-fi.com/robxberty)!
 - Contributing
 - License
 
-##Requirements 🛠️
+## Requirements 🛠️
 
 - A 3D printer with Bowden setup or compatible extruder system.
 - A set of printed components for the FoxFeeder (STL files available in the STLs directory).
@@ -34,7 +34,7 @@ If you like this project, consider [tipping](https://www.Ko-fi.com/robxberty)!
 - Slacker Sensor for filament slack detection (available from the Slacker repository).
 - FriendlyFox Macro Package (available from the FriendlyFox repository).
 
-##Assembly Instructions 🔧
+## Assembly Instructions 🔧
 
 - Print the Components
   Download the STL files and print them with your preferred settings.
@@ -45,7 +45,7 @@ If you like this project, consider [tipping](https://www.Ko-fi.com/robxberty)!
 - Assemble the FoxFeeder
   Follow the detailed step-by-step instructions in the Assembly Guide (still to come).
 
-##Configuration ⚙️
+## Configuration ⚙️
 
 To integrate the FoxFeeder MMU with your printer and firmware:
 
@@ -53,7 +53,7 @@ To integrate the FoxFeeder MMU with your printer and firmware:
 - Configure your slicer to define the number of active lanes.
 - Update your printer's Klipper configuration with the provided example configurations in configs/.
 
-##Usage 🚀
+## Usage 🚀
 
 Once set up, the FoxFeeder MMU will:
 
@@ -63,19 +63,19 @@ Once set up, the FoxFeeder MMU will:
 
 Refer to the Usage Guide for detailed instructions.
 
-##Roadmap 🛣️
+## Roadmap 🛣️
 
 - Add support for more lanes (e.g., 6-lane or 8-lane configurations).
 - Improve documentation and troubleshooting guides.
 - Create community challenges and showcases.
 
-##Contributing 🤝
+## Contributing 🤝
 
 Contributions are welcome! Feel free to submit issues, feature requests, and pull requests. Check the Contributing Guide for more details.
 Please also consider [tipping](https://www.Ko-fi.com/robxberty) to help with further development!
 
-License 📄
+## License 📄
 
 This project is licensed under the MIT License.
 
-##Join the FoxFeeder revolution and unleash the power of multi-material printing without breaking the bank! 🦊
+# Join the FoxFeeder revolution and unleash the power of multi-material printing without breaking the bank! 🦊
