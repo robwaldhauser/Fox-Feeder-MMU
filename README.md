@@ -14,34 +14,34 @@ Features ✨
 
 Table of Contents 📖
 
-    Introduction
-    Features
-    Requirements
-    Assembly Instructions
-    Configuration
-    Usage
-    Roadmap
-    Contributing
-    License
+- Introduction
+- Features
+- Requirements
+- Assembly Instructions
+- Configuration
+- Usage
+- Roadmap
+- Contributing
+- License
 
 Requirements 🛠️
 
-    A 3D printer with Bowden setup or compatible extruder system.
-    A set of printed components for the FoxFeeder (STL files available in the STLs directory).
-    Hardware kit (refer to the Bill of Materials).
-    Slacker Sensor for filament slack detection (available from the Slacker repository).
-    FriendlyFox Macro Package (available from the FriendlyFox repository).
+- A 3D printer with Bowden setup or compatible extruder system.
+- A set of printed components for the FoxFeeder (STL files available in the STLs directory).
+- Hardware kit (refer to the Bill of Materials).
+- Slacker Sensor for filament slack detection (available from the Slacker repository).
+- FriendlyFox Macro Package (available from the FriendlyFox repository).
 
 Assembly Instructions 🔧
 
-    Print the Components
-    Download the STL files and print them with your preferred settings.
+- Print the Components
+-     Download the STL files and print them with your preferred settings.
 
-    Prepare the Hardware
-    Gather the required hardware components listed in the Bill of Materials.
+- Prepare the Hardware
+-     Gather the required hardware components listed in the Bill of Materials.
 
-    Assemble the FoxFeeder
-    Follow the detailed step-by-step instructions in the Assembly Guide (still to come).
+- Assemble the FoxFeeder
+-     Follow the detailed step-by-step instructions in the Assembly Guide (still to come).
 
 Configuration ⚙️
 
