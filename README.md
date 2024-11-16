@@ -14,14 +14,14 @@ If you like this project, consider [tipping](https://www.Ko-fi.com/robxberty)!
 ## Table of Contents 📖
 
 - Introduction
-- [Features](#Features)
-- [Requirements](https://github.com/robwaldhauser/Fox-Feeder-MMU/blob/main/README.md#requirements-%EF%B8%8F)
-- Assembly Instructions
-- Configuration
-- Usage
-- Roadmap
-- Contributing
-- License
+- [Features](https://github.com/robwaldhauser/Fox-Feeder-MMU#features-)
+- [Requirements](https://github.com/robwaldhauser/Fox-Feeder-MMU#requirements-)
+- [Assembly Instructions](https://github.com/robwaldhauser/Fox-Feeder-MMU#assembly-instructions-)
+- [Configuration](https://github.com/robwaldhauser/Fox-Feeder-MMU#configuration-)
+- [Usage](https://github.com/robwaldhauser/Fox-Feeder-MMU#usage-)
+- [Roadmap](https://github.com/robwaldhauser/Fox-Feeder-MMU#roadmap-)
+- [Contributing](https://github.com/robwaldhauser/Fox-Feeder-MMU#contributing-)
+- [License](https://github.com/robwaldhauser/Fox-Feeder-MMU#license-)
 
 ## Requirements 🛠️
 
