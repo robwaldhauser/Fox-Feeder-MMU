@@ -1,11 +1,8 @@
 # Fox Feeder MMU 🦊
 
 The FoxFeeder MMU is a low-cost, easy-to-build multi-material unit (MMU) designed to bring advanced multi-material printing capabilities to any 3D printer running Klipper. Inspired by the functionality of the BambuLab AMS, the FoxFeeder MMU is a lightweight low-cost solution that pairs seamlessly with the FriendlyFox macro package and the innovative Slacker sensor for precise filament tracking.
-
-If you like this project, consider [tipping](https://www.Ko-fi.com/robxberty)! 
-
 ![FoxFeederMMU](https://github.com/user-attachments/assets/43a852b4-0c64-4c40-bf6a-195059f83858)
-
+If you like this project, consider [tipping](https://www.Ko-fi.com/robxberty)!
 ## Features ✨
 
 - Affordable: Designed with cost-effective components, making multi-material printing accessible.
