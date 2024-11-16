@@ -17,8 +17,8 @@ If you like this project, consider [tipping](https://www.Ko-fi.com/robxberty)!
 ## Table of Contents 📖
 
 - Introduction
-- Features
-- Requirements
+- [Features](#Features)
+- [Requirements](#Requirements)
 - Assembly Instructions
 - Configuration
 - Usage
