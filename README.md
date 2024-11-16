@@ -2,6 +2,8 @@
 
 The FoxFeeder MMU is a low-cost, easy-to-build multi-material unit (MMU) designed to bring advanced multi-material printing capabilities to any 3D printer running Klipper. Inspired by the functionality of the BambuLab AMS, the FoxFeeder MMU is a lightweight low-cost solution that pairs seamlessly with the FriendlyFox macro package and the innovative Slacker sensor for precise filament tracking.
 
+If you like this project, consider tipping me! Ko-fi.com/robxberty 
+
 ![FoxFeederMMU](https://github.com/user-attachments/assets/43a852b4-0c64-4c40-bf6a-195059f83858)
 
 Features ✨
@@ -35,36 +37,36 @@ Requirements 🛠️
 Assembly Instructions 🔧
 
 - Print the Components
--     Download the STL files and print them with your preferred settings.
+  Download the STL files and print them with your preferred settings.
 
 - Prepare the Hardware
--     Gather the required hardware components listed in the Bill of Materials.
+  Gather the required hardware components listed in the Bill of Materials.
 
 - Assemble the FoxFeeder
--     Follow the detailed step-by-step instructions in the Assembly Guide (still to come).
+  Follow the detailed step-by-step instructions in the Assembly Guide (still to come).
 
 Configuration ⚙️
 
 To integrate the FoxFeeder MMU with your printer and firmware:
 
-    Install the FriendlyFox Macro Package, simply copy the FriendlyFox.cfg file into your Klipper instance. Be sure to include it in your printer.cfg
-    Configure your slicer to define the number of active lanes.
-    Update your printer's Klipper configuration with the provided example configurations in configs/.
+- Install the FriendlyFox Macro Package, simply copy the FriendlyFox.cfg file into your Klipper instance. Be sure to include it in your printer.cfg
+- Configure your slicer to define the number of active lanes.
+- Update your printer's Klipper configuration with the provided example configurations in configs/.
 
 Usage 🚀
 
 Once set up, the FoxFeeder MMU will:
 
-    Detect and manage filament slack using the Slacker Sensor.
-    Switch lanes seamlessly during multi-material prints.
-    Operate efficiently and reliably under the control of the FriendlyFox macros.
+- Detect and manage filament slack using the Slacker Sensor.
+- Switch lanes seamlessly during multi-material prints.
+- Operate efficiently and reliably under the control of the FriendlyFox macros.
 
 Refer to the Usage Guide for detailed instructions.
 Roadmap 🛣️
 
-    Add support for more lanes (e.g., 6-lane or 8-lane configurations).
-    Improve documentation and troubleshooting guides.
-    Create community challenges and showcases.
+- Add support for more lanes (e.g., 6-lane or 8-lane configurations).
+- Improve documentation and troubleshooting guides.
+- Create community challenges and showcases.
 
 Contributing 🤝
 
