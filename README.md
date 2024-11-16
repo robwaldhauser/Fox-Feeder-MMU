@@ -18,7 +18,7 @@ If you like this project, consider [tipping](https://www.Ko-fi.com/robxberty)!
 
 - Introduction
 - [Features](#Features)
-- [Requirements](#Requirements)
+- [Requirements](https://github.com/robwaldhauser/Fox-Feeder-MMU/blob/main/README.md#requirements-%EF%B8%8F)
 - Assembly Instructions
 - Configuration
 - Usage
