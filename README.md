@@ -6,11 +6,11 @@ The FoxFeeder MMU is a low-cost, easy-to-build multi-material unit (MMU) designe
 
 Features ✨
 
-    Affordable: Designed with cost-effective components, making multi-material printing accessible.
-    Customizable Lanes: Choose between 2-lane or 4-lane configurations to suit your needs (additional lanes may be supported in the future)
-    Slacker Sensor Integration: Utilizes the Slacker Sensor for real-time monitoring of filament slack and tension through the Bowden tube, ensuring consistent filament flow.
-    Seamless Integration: Built to work flawlessly with the FriendlyFox macro package. One .cfg to add and that's it, no plugins needed!
-    Ease of Assembly: A straightforward assembly process suitable for hobbyists and newcomers alike.
+- Affordable: Designed with cost-effective components, making multi-material printing accessible.
+- Customizable Lanes: Choose between 2-lane or 4-lane configurations to suit your needs (additional lanes may be supported in the future)
+- Slacker Sensor Integration: Utilizes the Slacker Sensor for real-time monitoring of filament slack and tension through the Bowden tube, ensuring consistent filament flow.
+- Seamless Integration: Built to work flawlessly with the FriendlyFox macro package. One .cfg to add and that's it, no plugins needed!
+- Ease of Assembly: A straightforward assembly process suitable for hobbyists and newcomers alike.
 
 Table of Contents 📖
 
