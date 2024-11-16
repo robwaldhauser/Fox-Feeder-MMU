@@ -38,10 +38,8 @@ If you like this project, consider [tipping](https://www.Ko-fi.com/robxberty)!
 
 - Print the Components
   Download the STL files and print them with your preferred settings.
-
 - Prepare the Hardware
   Gather the required hardware components listed in the Bill of Materials.
-
 - Assemble the FoxFeeder
   Follow the detailed step-by-step instructions in the Assembly Guide (still to come).
 
