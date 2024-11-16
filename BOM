@@ -10,6 +10,7 @@ BOM is a work in progress, but the general and current counts are as follows:
     • 4x Limit Switches
     • 5x 1515 Extrusion 200mm
     • 8x ECAS Fittings
+    • 1x Small Rubber Band
     • 1x MCU of choice (must support 2 stepper drivers, and 4 limit switches)
     • PTFE Tubing
     • *assorted M3 hardware that has not been tallied yet
@@ -25,6 +26,7 @@ BOM is a work in progress, but the general and current counts are as follows:
     • 2x 1515 Extrusion 200mm
     • 3x 1515 Extrusion 370mm
     • 12x ECAS Fittings
+    • 1x Small Rubber Band
     • 1x MCU of choice (must support 4 stepper drivers, and 6 limit switches)
     • PTFE Tubing
     • *assorted M3 hardware that has not been tallied yet
