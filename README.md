@@ -3,6 +3,7 @@
 The FoxFeeder MMU is a low-cost, easy-to-build multi-material unit (MMU) designed to bring advanced multi-material printing capabilities to any 3D printer running Klipper. Inspired by the functionality of the BambuLab AMS, the FoxFeeder MMU is a lightweight low-cost solution that pairs seamlessly with the FriendlyFox macro package and the innovative Slacker sensor for precise filament tracking.
 ![Fox Feeder v138](https://github.com/user-attachments/assets/7b04603d-1f6c-49b7-b1f9-f125c56ca63e)
 If you like this project, consider [tipping](https://www.Ko-fi.com/robxberty)!
+
 ## Features ✨
 
 - Affordable: Designed with cost-effective components, making multi-material printing accessible.
@@ -31,14 +32,19 @@ If you like this project, consider [tipping](https://www.Ko-fi.com/robxberty)!
 - Slacker Sensor for filament slack detection (available from the Slacker repository).
 - FriendlyFox Macro Package (available from the FriendlyFox repository).
 
+## Printing Instructions
+
+- Designed to follow Voron printing standards. General rule is 0.4mm line widths, 4 walls, 5 tops and bottoms, and 40% infill. Adjust at your own risk.
+- All items with an [a] prefix are intended to be your accent color
+- All items with a [s] prefix are best to be printed in a [s]oft but not too [s]quishy filament to keep things [s]ilent. This can be a medium to hard tpu.
+- All items that need supports, have them built in.
+- The Roller Clutch Inner parts are designed to have an overhang for the pinwheels. You will want to gently free them up after printing but before assembly.
+
 ## Assembly Instructions 🔧
 
-- Print the Components
-  Download the STL files and print them with your preferred settings.
-- Prepare the Hardware
-  Gather the required hardware components listed in the Bill of Materials.
-- Assemble the FoxFeeder
-  Follow the detailed step-by-step instructions in the Assembly Guide (still to come).
+- Assemble your frame using Corner Cubes. The center cross bar will need to have a 31mm gap between it and the front extrusion. The tapered corners of the Corner Cubes will face up and outward.
+- Feet and Skirts assemble exactly like a Voron 0.
+- **more instructions to come, this is currently being updated**
 
 ## Configuration ⚙️
 
